@@ -1,5 +1,6 @@
 package codepath.com.flixster;
 
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,10 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
+
+import codepath.com.flixster.models.Movie;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieListActivity extends AppCompatActivity {
@@ -28,6 +32,8 @@ public class MovieListActivity extends AppCompatActivity {
     String imageBaseURL;
     String  posterSize;
 
+    ArrayList<Movie> movieList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,38 @@ public class MovieListActivity extends AppCompatActivity {
 
         //get configuration on start of app creation
         getConfiguration();
+        getNowPlaying();
+    }
+
+    private void getNowPlaying() {
+        //create URL
+        String url = API_BASE_URL + "/configuration";
+        //set request params
+        RequestParams params = new RequestParams();
+        params.put(API_KEY_PARAM, getString(R.string.api_key));
+        //execute a GET request
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //load results into movie list
+                try {
+                    JSONArray results = response.getJSONArray("results");
+                    //iterate thru array to create movie objects
+                    for(int i = 0; i < results.length(); i++) {
+                        Movie movie = new Movie(results.getJSONObject(i));
+                        movieList.add(movie);
+                    }
+                    Log.i(TAG, String.format("Loaded %s movies", results.length()));
+                } catch (JSONException e) {
+                    logError("Failed to parse now playing movies", e, true);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                logError("Failed to get data from now playing endpoint", throwable, true);
+            }
+        });
     }
 
     private void getConfiguration() {
@@ -57,6 +95,7 @@ public class MovieListActivity extends AppCompatActivity {
                     //get poster size
                     JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
                     posterSize = posterSizeOptions.optString(3, "w342");
+                    Log.i(TAG, String.format("Loaded configuraton with imageBaseURL %s and posterSize %s", imageBaseURL, posterSize));
                 } catch (JSONException e) {
                     logError("Failed parsing configuration", e, true);
                 }
@@ -74,7 +113,7 @@ public class MovieListActivity extends AppCompatActivity {
         Log.e(TAG, message, error);
         //alert user through a Toast
         if(alertUser) {
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
