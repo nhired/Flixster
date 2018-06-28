@@ -22,7 +22,7 @@ public class Config {
 
         //parse backdrop sizes
         JSONArray backdropSizeOptions = images.getJSONArray("backdrop_sizes");
-        backDropSize = backdropSizeOptions.optString(1, "w788");
+        backDropSize = backdropSizeOptions.optString(1, "w780");
 
 
     }
@@ -38,5 +38,9 @@ public class Config {
 
     public String getPosterSize() {
         return posterSize;
+    }
+
+    public String getBackDropSize() {
+        return backDropSize;
     }
 }
