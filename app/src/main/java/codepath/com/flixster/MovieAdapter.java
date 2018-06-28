@@ -10,16 +10,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
+import codepath.com.flixster.models.Config;
 import codepath.com.flixster.models.Movie;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     ArrayList<Movie> movies;
 
+    //config needed for image urls
+    Config config;
+    Context context;
+
+
     public MovieAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
+    }
+
+    public void setConfig(Config config) {
+        this.config = config;
     }
 
     //creates and inflates new view
@@ -27,7 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         //get context from parent
-        Context context = viewGroup.getContext();
+        context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         //create view using the item movie layout
         View movieView = inflater.inflate(R.layout.item_movie, viewGroup, false);
@@ -43,6 +56,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         //populate the view with the movie data
         viewHolder.tvTitle.setText(movie.getTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
+
+        //build url for poster image
+        String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
+
+        int radius = 30;
+        int margin = 10;
+        //load image using glide
+        GlideApp.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.flicks_movie_placeholder)
+                .error(R.drawable.flicks_movie_placeholder)
+                .transform(new RoundedCornersTransformation(radius, margin))
+                .into(viewHolder.ivPoster);
+
+
+
+
+
 
     }
 

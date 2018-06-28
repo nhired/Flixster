@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
+import codepath.com.flixster.models.Config;
 import codepath.com.flixster.models.Movie;
 import cz.msebera.android.httpclient.Header;
 
@@ -31,13 +32,13 @@ public class MovieListActivity extends AppCompatActivity {
 
     //instance variables
     AsyncHttpClient client;
-    String imageBaseURL;
-    String posterSize;
 
     ArrayList<Movie> movieList;
 
     RecyclerView rvMovies;
     MovieAdapter adapter;
+
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +104,12 @@ public class MovieListActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    JSONObject images = response.getJSONObject("images");
-
-                    //get image base url
-                    imageBaseURL = images.getString("secure_base_url");
-                    //get poster size
-                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
-                    posterSize = posterSizeOptions.optString(3, "w342");
-                    Log.i(TAG, String.format("Loaded configuraton with imageBaseURL %s and posterSize %s", imageBaseURL, posterSize));
+                    config = new Config(response);
+                    Log.i(TAG, String.format("Loaded configuraton with imageBaseURL %s and posterSize %s",
+                            config.getImageBaseURL(),
+                            config.getPosterSize()));
+                    //pass config to adapter
+                    adapter.setConfig(config);
                     //get now playing movie list
                     getNowPlaying();
                 } catch (JSONException e) {
