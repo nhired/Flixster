@@ -18,6 +18,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import codepath.com.flixster.models.Config;
 import codepath.com.flixster.models.Movie;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -106,7 +108,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //lookup view object by id
-            ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
+            ButterKnife.bind(this, itemView);
+            //@BindView(R.id.ivPoster) ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
             ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);

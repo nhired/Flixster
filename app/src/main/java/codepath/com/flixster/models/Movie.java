@@ -13,6 +13,8 @@ public class Movie {
 
      Double voteAverage;
 
+     Integer id;
+
      public Movie() {
 
      }
@@ -23,6 +25,7 @@ public class Movie {
         posterPath = obj.getString("poster_path");
         backdropPath = obj.getString("backdrop_path");
         voteAverage = obj.getDouble("vote_average");
+        id = Integer.parseInt(String.valueOf(obj.getJSONObject("id")));
     }
 
     public String getTitle() {
