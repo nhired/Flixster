@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".HomePage">
+
+    <Button
+        android:id="@+id/nowp_btn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:fontFamily="@font/audiowide"
+        android:text="Now Playing" />
+
+    <ImageView
+        android:id="@+id/nowPlaying_img"
+        android:layout_width="193dp"
+        android:layout_height="233dp"
+
+        android:layout_alignStart="@id/nowp_btn"
+        android:layout_below="@+id/nowp_btn"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_nowplaying"
+        app:srcCompat="@android:color/background_light"
+        android:layout_alignLeft="@id/nowp_btn" />
+
+    <Button
+        android:id="@+id/upcoming_btn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nowPlaying_img"
+        android:background="#000000"
+        android:fontFamily="@font/audiowide"
+        android:text="Upcoming" />
+
+    <ImageView
+        android:id="@+id/upcoming_img"
+        android:layout_width="193dp"
+        android:layout_height="237dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_toprated"
+        app:srcCompat="@android:color/background_light" />
+
+    <Button
+        android:id="@+id/popular_btn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/nowp_btn"
+        android:layout_toRightOf="@+id/nowp_btn"
+        android:background="#000000"
+        android:fontFamily="@font/audiowide"
+        android:text="Popular" />
+
+    <ImageView
+        android:id="@+id/popular_img"
+        android:layout_width="193dp"
+        android:layout_height="233dp"
+        android:layout_below="@+id/nowp_btn"
+        android:layout_toEndOf="@+id/nowp_btn"
+        android:layout_toRightOf="@+id/nowp_btn"
+        android:src="@drawable/ic_popular"
+        app:srcCompat="@android:color/background_light" />
+
+    <Button
+        android:id="@+id/top_rated_btn"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/nowPlaying_img"
+        android:background="#000000"
+        android:fontFamily="@font/audiowide"
+        android:text="Top Rated" />
+
+    <ImageView
+        android:id="@+id/toprated_img"
+        android:layout_width="172dp"
+        android:layout_height="237dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_upcoming"
+        app:srcCompat="@android:color/background_light" />
+
+</RelativeLayout>
