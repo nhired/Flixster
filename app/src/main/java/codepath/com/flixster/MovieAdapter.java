@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     //config needed for image urls
     Config config;
     Context context;
+    public static final String imgUrl = "";
 
 
     public MovieAdapter(ArrayList<Movie> movies) {
@@ -98,24 +101,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
-        //track view objects
-        ImageView ivPoster;
-        ImageView ivBackdropImage;
-        TextView tvTitle;
-        TextView tvOverview;
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @Nullable@BindView(R.id.ivPoster) ImageView ivPoster;
+        @Nullable@BindView(R.id.ivBackdropImage) ImageView ivBackdropImage;
+        @BindView(R.id.tvOverview) TextView tvOverview;
+        @BindView(R.id.tvTitle) TextView tvTitle;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //lookup view object by id
             ButterKnife.bind(this, itemView);
-            //@BindView(R.id.ivPoster) ivPoster = (ImageView) itemView.findViewById(R.id.ivPoster);
-            ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
-            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             itemView.setOnClickListener(this);
-        }
 
+
+        }
         // when the user clicks on a row, show MovieDetailsActivity for the selected movie
         @Override
         public void onClick(View v) {
@@ -131,6 +131,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
                 // show the activity
                 context.startActivity(intent);
+
+                intent.putExtra(imgUrl, config.getImageUrl(config.getPosterSize(), movie.getPosterPath()));
             }
         }
     }

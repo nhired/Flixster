@@ -21,7 +21,6 @@
         <activity
             android:name=".MovieDetailsActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MovieTrailerActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

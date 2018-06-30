@@ -10,6 +10,10 @@ public class Movie {
      String overview;
      String posterPath;
      String backdropPath;
+     String releaseDate;
+     int popularity;
+     Integer voteCount;
+
 
      Double voteAverage;
 
@@ -25,7 +29,9 @@ public class Movie {
         posterPath = obj.getString("poster_path");
         backdropPath = obj.getString("backdrop_path");
         voteAverage = obj.getDouble("vote_average");
-        id = Integer.parseInt(String.valueOf(obj.getJSONObject("id")));
+        releaseDate = obj.getString("release_date");
+        voteCount = obj.getInt("vote_count");
+        popularity = obj.getInt("popularity");
     }
 
     public String getTitle() {
@@ -43,4 +49,12 @@ public class Movie {
     public String getBackdropPath() { return backdropPath; }
 
     public Double getVoteAverage() { return voteAverage; }
+
+    public String getReleaseDate() { return releaseDate; }
+
+    public int getPopularity() { return popularity; }
+
+    public int getVoteCount() { return voteCount; }
+
+
 }
